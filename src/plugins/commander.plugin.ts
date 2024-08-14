@@ -15,7 +15,7 @@ export function commander(commanderOption: TaskRepositoryImpl) {
     .action(async (task) => {
       const result = await commanderOption.addTask(task)
 
-      result.success ? console.log('Task added successfully') : console.log('Error adding task');
+      console.log(result.message)
     }).addHelpText('after', `Example:
       $ task-cli add "Buy milk"
       $ task-cli add "Buy milk and eggs"`
@@ -34,7 +34,8 @@ export function commander(commanderOption: TaskRepositoryImpl) {
 
       const result = await commanderOption.updateTask(id, task)
 
-      result ? console.log('Task updated successfully') : console.log('Error updating task');
+      console.log(result.message)
+      console.log(result?.data)
     })
     .addHelpText('after', `Example:
       $ task-cli update 1 "Buy cookies"
@@ -54,7 +55,7 @@ export function commander(commanderOption: TaskRepositoryImpl) {
 
       const result = await commanderOption.deleteTask(id)
 
-      result ? console.log('Task deleted successfully') : console.log('Error deleting task');
+      console.log(result.message)
     })
     .addHelpText('after', `Example:
       $ task-cli delete 1
@@ -74,7 +75,7 @@ export function commander(commanderOption: TaskRepositoryImpl) {
 
       const result = await commanderOption.markInProgressTask(id)
 
-      result ? console.log('Task marked as in progress') : console.log('Error marking task as in progress');
+      console.log(result.message)
     })
 
   // 
@@ -89,7 +90,7 @@ export function commander(commanderOption: TaskRepositoryImpl) {
 
       const result = await commanderOption.markDoneTask(id)
 
-      result ? console.log('Task marked as done') : console.log('Error marking task as done');
+      console.log(result.message)
     });
 
   // List command

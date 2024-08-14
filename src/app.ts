@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { JsonDatasourceImpl } from "./infrastructure/datasources/json.datasource.impl"
 import { TaskRepositoryImpl } from "./infrastructure/repositories/task.repository.impl"
 import { Server } from "./presentation/server"
