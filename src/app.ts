@@ -1,10 +1,18 @@
+import { JsonDatasourceImpl } from "./infrastructure/datasources/json.datasource.impl"
+import { TaskRepositoryImpl } from "./infrastructure/repositories/task.repository.impl"
 import { Server } from "./presentation/server"
 
 (async () => {
   main()
 })()
 
-function main() {
-  Server.start()
+async function main() {
+  const jsonData = new TaskRepositoryImpl(
+    new JsonDatasourceImpl()
+  )
+
+  new Server(jsonData).start()
+
+  // Server.start()
 }
 

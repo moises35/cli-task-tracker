@@ -1,72 +1,113 @@
 import { program } from 'commander';
-import { Task } from '../types';
+import { TaskStatus } from '../domain/entities/task.entitie';
+import { TaskRepositoryImpl } from '../infrastructure/repositories/task.repository.impl';
+import { tableData } from './table.plugin';
 
-type CommanderOptions = {
-  addTask: (task: string) => boolean;
-  deleteTask: (id: number) => boolean;
-  updateTask: (id: number, task: string) => boolean;
-  markInProgressTask: (id: number) => boolean;
-  markDoneTask: (id: number) => boolean;
-  listTasks: (status?: string) => Task[];
-}
-
-export function commander(commanderOption: CommanderOptions) {
+export function commander(commanderOption: TaskRepositoryImpl) {
   program
     .name('task-cli')
     .description('Task tracker CLI')
     .version('0.0.1');
 
+  // Add command
   program.command('add <task>')
     .description('Add a new task')
-    .action((task) => {
-      if (typeof task !== 'string') {
-        throw new Error('Task must be a string');
-      }
+    .action(async (task) => {
+      const result = await commanderOption.addTask(task)
 
-      commanderOption.addTask(task)
+      result.success ? console.log('Task added successfully') : console.log('Error adding task');
     }).addHelpText('after', `Example:
       $ task-cli add "Buy milk"
       $ task-cli add "Buy milk and eggs"`
     )
-    .addHelpText('after', 'Note: Task must be a string')
+    .addHelpText('after', 'Note: Task must be a string');
       
-    // .showHelpAfterError('')
-    ;
-  
+  // Update command
   program.command('update <id> <task>')
     .description('Update a task')
-    .action((id, task) => {
-      console.log('Task updated successfully', id, task);
-    });
+    .action(async (id, task) => {
+      id = parseInt(id);
 
+      if(typeof id !== 'number') {
+        throw new Error('<id> must be a number')
+      }
+
+      const result = await commanderOption.updateTask(id, task)
+
+      result ? console.log('Task updated successfully') : console.log('Error updating task');
+    })
+    .addHelpText('after', `Example:
+      $ task-cli update 1 "Buy cookies"
+      $ task-cli update 1 "Learn nodejs"`
+    )
+    .addHelpText('after', 'Note: <task> must be a string and <id> must be a number');
+
+  // Delete command
   program.command('delete <id>')
     .description('Delete a task')
-    .action((id) => {
-      console.log('Task deleted successfully', id);
-    });
+    .action(async (id) => {
+      id = parseInt(id);
 
+      if(typeof id !== 'number') {
+        throw new Error('<id> must be a number')
+      }
+
+      const result = await commanderOption.deleteTask(id)
+
+      result ? console.log('Task deleted successfully') : console.log('Error deleting task');
+    })
+    .addHelpText('after', `Example:
+      $ task-cli delete 1
+      $ task-cli delete 2`
+    )
+    .addHelpText('after', 'Note: <id> must be a number');
+
+  // Mark as in progress command
   program.command('mark-in-progress <id>')
     .description('Mark a task as in progress')
-    .action((id) => {
-      console.log('Task marked as in progress', id);
-    });
+    .action(async (id) => {
+      id = parseInt(id);
 
+      if(typeof id !== 'number') {
+        throw new Error('<id> must be a number')
+      }
+
+      const result = await commanderOption.markInProgressTask(id)
+
+      result ? console.log('Task marked as in progress') : console.log('Error marking task as in progress');
+    })
+
+  // 
   program.command('mark-done <id>')
     .description('Mark a task as done')
-    .action((id) => {
-      console.log('Task marked as done', id);
+    .action(async (id) => {
+      id = parseInt(id);
+
+      if(typeof id !== 'number') {
+        throw new Error('<id> must be a number')
+      }
+
+      const result = await commanderOption.markDoneTask(id)
+
+      result ? console.log('Task marked as done') : console.log('Error marking task as done');
     });
 
-  program.command('list <status>')
+  // List command
+  program.command('list [status]')
     .description('List tasks by status. Status can be: done | todo | in-progress | none')
-    .action(() => {
-      console.log('Tasks list by ');
+    .action(async (status: string) => {
+      if(status === TaskStatus.done || status === TaskStatus.inProgress || status === TaskStatus.todo) {
+        const tasks = await commanderOption.listTasks(status);
+        console.log(tableData(tasks));
+      } else if(status === undefined || status === '') {
+        const tasks = await commanderOption.listTasks();
+        console.log(tableData(tasks));
+      } else {
+        console.log('Invalid status');
+      }
     });
 
-
-  
   program.parse(process.argv);
 
-  // console.log(program)
   return program.opts();
 }

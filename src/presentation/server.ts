@@ -1,20 +1,12 @@
 import { commander } from "../plugins/commander.plugin"
-
+import { TaskRepositoryImpl } from "../infrastructure/repositories/task.repository.impl"
 
 export class Server {
-  static start() {
-    console.log('Server started')
-    const commanderOptions = {
-      addTask: (task: string) => { return true },
-      deleteTask: (id: number) => { return true },
-      updateTask: (id: number, task: string) => { return true },
-      markInProgressTask: (id: number) => { return true },
-      markDoneTask: (id: number) => { return true },
-      listTasks: (status?: string) => []
-    }
-    
-    const result = commander(commanderOptions)
+  constructor(
+    private readonly taskRepository: TaskRepositoryImpl
+  ){}
 
-    console.log(result)
+  public async start() {
+    commander(this.taskRepository)
   }
 }

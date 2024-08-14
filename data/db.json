@@ -1,0 +1,23 @@
+[
+  {
+    "id": 3,
+    "task": "nuevo2",
+    "status": "todo",
+    "createdAt": "14/8/2024, 1:37:58 p. m.",
+    "updatedAt": "14/8/2024"
+  },
+  {
+    "id": 2,
+    "task": "Comprar",
+    "status": "in-progress",
+    "createdAt": "14/8/2024, 1:43:37 p. m.",
+    "updatedAt": "14/8/2024"
+  },
+  {
+    "id": 4,
+    "task": "hacer pan",
+    "status": "todo",
+    "createdAt": "14/8/2024, 3:44:07 p. m.",
+    "updatedAt": "14/8/2024"
+  }
+]
