@@ -2,9 +2,11 @@
   "name": "cli-task-tracker",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "build": "rimraf ./dist && tsc",
-    "dev": "tsnd --respawn --clear src/app.ts",
+    "type-check": "tsc --noEmit",
+    "dev": "tsx src/app.ts",
     "start": "npm run build && node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,13 +20,15 @@
   "dependencies": {
     "chalk": "5.3.0",
     "commander": "12.1.0",
-    "ora": "8.0.1",
     "table": "6.8.2"
   },
   "devDependencies": {
     "@types/node": "22.2.0",
     "rimraf": "6.0.1",
-    "ts-node-dev": "2.0.0",
+    "tsx": "4.17.0",
     "typescript": "5.5.4"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }

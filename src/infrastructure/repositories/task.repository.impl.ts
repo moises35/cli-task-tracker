@@ -1,6 +1,6 @@
-import { TaskDatasource } from "../../domain/datasource/task.datasource";
-import { Task, TaskResponse, TaskStatus } from "../../domain/entities/task.entitie";
-import { TaskRepository } from "../../domain/repository/task.repository";
+import { TaskDatasource } from "./../../domain/datasource/task.datasource.js";
+import { Task, TaskResponse, TaskStatus } from "./../../domain/entities/task.entitie.js";
+import { TaskRepository } from "./../../domain/repository/task.repository.js";
 
 export class TaskRepositoryImpl implements TaskRepository {
   constructor(

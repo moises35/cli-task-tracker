@@ -1,7 +1,8 @@
 import { program } from 'commander';
-import { TaskStatus } from '../domain/entities/task.entitie';
-import { TaskRepositoryImpl } from '../infrastructure/repositories/task.repository.impl';
-import { tableData } from './table.plugin';
+import { TaskStatus } from './../domain/entities/task.entitie.js';
+import { TaskRepositoryImpl } from './../infrastructure/repositories/task.repository.impl.js';
+import { tableData } from './../plugins/table.plugin.js';
+import { errorMessage, successMessage } from './message.plugin.js';
 
 export function commander(commanderOption: TaskRepositoryImpl) {
   program
@@ -15,7 +16,7 @@ export function commander(commanderOption: TaskRepositoryImpl) {
     .action(async (task) => {
       const result = await commanderOption.addTask(task)
 
-      console.log(result.message)
+      result.success ? successMessage(result.message) : errorMessage(result.message)
     }).addHelpText('after', `Example:
       $ task-cli add "Buy milk"
       $ task-cli add "Buy milk and eggs"`
@@ -34,7 +35,7 @@ export function commander(commanderOption: TaskRepositoryImpl) {
 
       const result = await commanderOption.updateTask(id, task)
 
-      console.log(result.message)
+      result.success ? successMessage(result.message) : errorMessage(result.message)
       console.log(result?.data)
     })
     .addHelpText('after', `Example:
@@ -55,7 +56,7 @@ export function commander(commanderOption: TaskRepositoryImpl) {
 
       const result = await commanderOption.deleteTask(id)
 
-      console.log(result.message)
+      result.success ? successMessage(result.message) : errorMessage(result.message)
     })
     .addHelpText('after', `Example:
       $ task-cli delete 1
@@ -75,7 +76,7 @@ export function commander(commanderOption: TaskRepositoryImpl) {
 
       const result = await commanderOption.markInProgressTask(id)
 
-      console.log(result.message)
+      result.success ? successMessage(result.message) : errorMessage(result.message)
     })
 
   // 
@@ -90,7 +91,7 @@ export function commander(commanderOption: TaskRepositoryImpl) {
 
       const result = await commanderOption.markDoneTask(id)
 
-      console.log(result.message)
+      result.success ? successMessage(result.message) : errorMessage(result.message)
     });
 
   // List command
@@ -104,7 +105,7 @@ export function commander(commanderOption: TaskRepositoryImpl) {
         const tasks = await commanderOption.listTasks();
         console.log(tableData(tasks));
       } else {
-        console.log('Invalid status');
+        errorMessage('Invalid status');
       }
     });
 

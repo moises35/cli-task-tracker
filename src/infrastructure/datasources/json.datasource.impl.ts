@@ -1,6 +1,6 @@
 import fs from 'fs';
-import { TaskDatasource } from '../../domain/datasource/task.datasource';
-import { Task, TaskResponse, TaskStatus } from '../../domain/entities/task.entitie';
+import { TaskDatasource } from './../../domain/datasource/task.datasource.js';
+import { Task, TaskResponse, TaskStatus } from './../../domain/entities/task.entitie.js';
 
 export class JsonDatasourceImpl implements TaskDatasource {
   private readonly dataFolderPath = 'data/';
@@ -28,7 +28,7 @@ export class JsonDatasourceImpl implements TaskDatasource {
         task,
         status: TaskStatus.todo,
         createdAt: new Date().toLocaleString(),
-        updatedAt: new Date().toLocaleDateString()
+        updatedAt: new Date().toLocaleString()
       } 
 
       tasks.push(newTask);
@@ -91,7 +91,7 @@ export class JsonDatasourceImpl implements TaskDatasource {
       }
 
       tasks[taskIndex].task = task;
-      tasks[taskIndex].updatedAt = new Date().toLocaleDateString();
+      tasks[taskIndex].updatedAt = new Date().toLocaleString();
 
       fs.writeFileSync(this.dataFilePath, JSON.stringify(tasks, null, 2));
 
@@ -121,7 +121,7 @@ export class JsonDatasourceImpl implements TaskDatasource {
       }
 
       tasks[taskIndex].status = TaskStatus.inProgress;
-      tasks[taskIndex].updatedAt = new Date().toLocaleDateString();
+      tasks[taskIndex].updatedAt = new Date().toLocaleString();
 
       fs.writeFileSync(this.dataFilePath, JSON.stringify(tasks, null, 2));
 
@@ -151,7 +151,7 @@ export class JsonDatasourceImpl implements TaskDatasource {
       }
 
       tasks[taskIndex].status = TaskStatus.done;
-      tasks[taskIndex].updatedAt = new Date().toLocaleDateString();
+      tasks[taskIndex].updatedAt = new Date().toLocaleString();
 
       fs.writeFileSync(this.dataFilePath, JSON.stringify(tasks, null, 2));
     } catch (error) {

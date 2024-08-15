@@ -1,5 +1,5 @@
 import { table } from 'table';
-import { Task } from '../domain/entities/task.entitie';
+import { Task } from './../domain/entities/task.entitie.js';
 
 export const tableData = (data: Task[]) => {
   const header = ['ID', 'Task', 'Status', 'CreatedAt', 'UpdatedAt'];

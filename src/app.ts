@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-import { JsonDatasourceImpl } from "./infrastructure/datasources/json.datasource.impl"
-import { TaskRepositoryImpl } from "./infrastructure/repositories/task.repository.impl"
-import { Server } from "./presentation/server"
+
+import { JsonDatasourceImpl } from "./infrastructure/datasources/json.datasource.impl.js"
+import { TaskRepositoryImpl } from "./infrastructure/repositories/task.repository.impl.js"
+import { Server } from "./presentation/server.js"
 
 (async () => {
   main()
@@ -13,7 +14,5 @@ async function main() {
   )
 
   new Server(jsonData).start()
-
-  // Server.start()
 }
 

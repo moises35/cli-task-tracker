@@ -1,5 +1,5 @@
-import { commander } from "../plugins/commander.plugin"
-import { TaskRepositoryImpl } from "../infrastructure/repositories/task.repository.impl"
+import { TaskRepositoryImpl } from "./../infrastructure/repositories/task.repository.impl.js"
+import { commander } from "./../plugins/commander.plugin.js"
 
 export class Server {
   constructor(

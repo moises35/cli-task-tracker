@@ -1,4 +1,4 @@
-import { Task, TaskResponse, TaskStatus } from "../entities/task.entitie";
+import { Task, TaskResponse, TaskStatus } from "./../entities/task.entitie.js";
 
 export abstract class TaskDatasource {
   abstract addTask(task: string): Promise<TaskResponse>;
